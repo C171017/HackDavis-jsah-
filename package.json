@@ -4,7 +4,9 @@
   "private": true,
   "workspaces": ["frontend"],
   "scripts": {
+    "clean": "rm -rf frontend/.next",
     "dev": "npm run dev -w frontend",
+    "dev:clean": "npm run clean && npm run dev",
     "build": "npm run build -w frontend",
     "start": "npm run start -w frontend",
     "lint": "npm run lint -w frontend"
