@@ -80,8 +80,10 @@ async def call_claude(messages: list, system: str = "", max_tokens: int = 1024) 
             json=body,
         )
         data = resp.json()
-        print("GROQ RESPONSE:", data)
+        print("GROQ RESPONSE:", data, flush=True)
+        # return data["content"][0]["text"]
         return data["choices"][0]["message"]["content"]
+
 
 async def call_claude_vision(image_b64: str, media_type: str, prompt: str) -> str:
     async with httpx.AsyncClient(timeout=60) as client:
@@ -92,7 +94,8 @@ async def call_claude_vision(image_b64: str, media_type: str, prompt: str) -> st
                 "Content-Type": "application/json",
             },
             json={
-                "model": "llama-3.2-90b-vision-preview",
+                "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+                
                 "max_tokens": 1024,
                 "messages": [{"role": "user", "content": [
                     {"type": "image_url", "image_url": {"url": f"data:{media_type};base64,{image_b64}"}},
@@ -101,9 +104,8 @@ async def call_claude_vision(image_b64: str, media_type: str, prompt: str) -> st
             },
         )
         data = resp.json()
-        print("GROQ RESPONSE:", data)
-        return data["choices"][0]["message"]["content"]
-
+        print("GROQ RESPONSE:", data, flush=True)
+        return data["choices"][0]["message"]["content"] 
 
     
 async def generate_speech(text: str) -> str:
@@ -159,9 +161,10 @@ async def analyze_fridge(image: UploadFile = File(...)):
     media_type = image.content_type or "image/jpeg"
 
     result = await call_claude_vision(b64, media_type, """Look at this photo of food/fridge/pantry items.
-Extract every visible food ingredient. Be specific (e.g., "cheddar cheese" not just "cheese").
-Return ONLY a JSON array of strings, no other text. Example:
-["eggs", "whole milk", "cheddar cheese", "spinach"]""")
+            Extract every visible food ingredient. Be specific (e.g., "cheddar cheese" not just "cheese").
+            Return ONLY a JSON array of strings, no other text. Example:
+            ["eggs", "whole milk", "cheddar cheese", "spinach"]""")
+    print(">>> call_claude_vision called", flush=True)
 
     try:
         ingredients = parse_json(result)
