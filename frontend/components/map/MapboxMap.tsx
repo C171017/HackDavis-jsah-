@@ -36,14 +36,12 @@ function configureStandardBasemap(map: MapboxGLMap) {
 
 const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
-/** Globe overview before flying to campus. */
 const GLOBAL_VIEW = {
   longitude: -40,
   latitude: 20,
   zoom: 1,
 } as const;
 
-/** UC Davis — Memorial Union / campus core (matches prior MapView spec). */
 const TARGET_VIEW = {
   longitude: -121.7617,
   latitude: 38.5382,
