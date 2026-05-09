@@ -20,9 +20,9 @@ export function MapboxMap() {
         <p className="max-w-md text-sm text-neutral-600">
           Create{" "}
           <code className="rounded bg-white px-1.5 py-0.5 text-xs">
-            .env.local
+            frontend/.env.local
           </code>{" "}
-          in the project root with:
+          with:
         </p>
         <pre className="rounded-lg bg-white p-4 text-left text-xs text-neutral-800 shadow-sm">
           {`NEXT_PUBLIC_MAPBOX_TOKEN=pk.your_token_here`}
