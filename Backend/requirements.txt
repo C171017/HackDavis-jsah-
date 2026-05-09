@@ -2,3 +2,4 @@ fastapi
 uvicorn[standard]
 motor
 python-dotenv
+backboard-sdk
