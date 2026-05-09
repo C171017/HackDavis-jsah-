@@ -19,7 +19,10 @@
 ## Hard rules for agents
 
 - **Do not invent endpoints, schemas, env var names, or file paths.** They are listed in [`03-api-contracts.md`](./03-api-contracts.md), [`02-conventions.md`](./02-conventions.md), and [`01-architecture.md`](./01-architecture.md). If something is missing, **ask** rather than guess.
-- **Honor stub mode.** If `PHASE_N_STUB=true`, the corresponding endpoint must return canned data without calling external APIs. See [`02-conventions.md#stub-mode`](./02-conventions.md#stub-mode).
+- **Honor stub mode.** If a `*_STUB=true` flag is set, the corresponding endpoint/subsystem must return canned data without calling external APIs. See [`02-conventions.md#stub-mode`](./02-conventions.md#stub-mode).
 - **Never write API keys to logs, repo, or client bundles.** All secrets are server-side only. Mapbox public token is the only exception.
 - **One PR = one concern.** Don't pile Phase 1, Phase 2, and a UI refactor into one diff.
 - **When you change behavior, update the matching human doc** in `docs/human/`. The mirror map is in [`docs/SYNC.md`](../SYNC.md).
+- **MongoDB:** all coordinates are GeoJSON `Point` with `[lng, lat]` (longitude first). Never `{lat, lng}` numbers.
+- **Backboard:** all reads/writes scoped to `userId = sessionId`. Use only the documented `kind` values in [`02-conventions.md`](./02-conventions.md#backboard-conventions).
+- **Sheets writes are best-effort.** Never block the dashboard on a Sheets failure.
